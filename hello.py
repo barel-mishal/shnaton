@@ -4,7 +4,7 @@ import io
 
 
 # Hi Barel, whats up?
-link = requests.get("https://shnaton.huji.ac.il/index.php?peula=Simple&maslul=0&shana=0&year=2020&course=71012")
+link = requests.get("https://shnaton.huji.ac.il/index.php?peula=CourseD&course=71012&detail=examDates&year=2020&line=&faculty=8&maslul=0")
 text = link.text
 
 soup = BeautifulSoup(text, features="html.parser")
