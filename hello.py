@@ -8,13 +8,28 @@ link = requests.get("https://shnaton.huji.ac.il/index.php?peula=CourseD&course=7
 text = link.text
 
 soup = BeautifulSoup(text, features="html.parser")
-# print(soup.find(id="mainmenu"))
-table = soup.select("td.courseTab_content")
-list_datatable = []
-for i in table:
-	list_datatable = i.select("td.courseTab_td")
-for i in list_datatable[0::6]:
-	print(i) # to try regular exprtion to catch the date
+rows = soup.select("td.courseTab_content tr")
+
+class Exem():
+	pass
+		
+exems = []
+for row in rows:
+	column = row.select("td.courseTab_td")
+	if column:
+	 	exem = Exem()
+	 	exem.name = column[4].get_text()
+	 	exem.date = column[0].get_text()
+	 	exem.time = column[1].get_text()
+	 	exem.simster = column[5].get_text()
+	 	exems.append(exem)
+
+for exem in exems:
+	print("name due: " + exem.name)
+	print("date of exem: " + exem.date)
+	print("time: " + exem.time)
+	print("simster: " + exem.date)
+	print("__________________________\n")
 
 
 	
