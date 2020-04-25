@@ -9,7 +9,7 @@ text = link.text
 
 soup = BeautifulSoup(text, features="html.parser")
 rows = soup.select("td.courseTab_content tr")
-
+# Comment
 class Exam:
     pass
 
