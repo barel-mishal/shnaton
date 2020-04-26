@@ -24,15 +24,24 @@ for row in rows:
 	 	exem.simster = column[5].get_text()
 	 	exems.append(exem)
 
-for exem in exems:
-	print("name due: " + exem.name)
-	print("date of exem: " + exem.date)
-	print("time: " + exem.time)
-	print("simster: " + exem.date)
-	print("__________________________\n")
+# i try to make it print one time 
 
+# for exem in exems:
+# 		print("name due: " + exem.name)
+# 		print("date of exem: " + exem.date)
+# 		print("time: " + exem.time)
+# 		print("simster: " + exem.date)
+# 		print("__________________________\n")
 
-	
+objects = []
+date1 = []
+for i in exems:
+	if i.date not in date1:
+		date1.append(i.date)
+		objects.append(i)
+
+print(objects)
+
 with io.open("out1.html", "w", encoding="utf-8") as f:
     f.write(text.replace("windows-1255", "utf-8"))
 f.close()
