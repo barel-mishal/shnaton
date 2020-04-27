@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import io
 import re
-
+import quickstart # try to link the two file to work togther i will keep trying
 
 link = requests.get("https://shnaton.huji.ac.il/index.php?peula=CourseD&course=71012&detail=examDates&year=2020&line=&faculty=8&maslul=0")
 text = link.text
@@ -40,7 +40,7 @@ for i in exems:
 		date1.append(i.date)
 		objects.append(i)
 
-print(objects)
+
 
 with io.open("out1.html", "w", encoding="utf-8") as f:
     f.write(text.replace("windows-1255", "utf-8"))
