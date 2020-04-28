@@ -32,16 +32,17 @@ if not creds or not creds.valid:
 
 service = build('calendar', 'v3', credentials=creds)
 
-
-link = requests.get("https://shnaton.huji.ac.il/index.php?peula=CourseD&course=71012&detail=examDates&year=2020&line=&faculty=8&maslul=0")
+course_details = "71430"
+link = requests.get(f"https://shnaton.huji.ac.il/index.php?peula=CourseD&course={course_details}&detail=examDates&year=2020&line=&faculty=8&maslul=0")
 text = link.text
+
 
 soup = BeautifulSoup(text, features="html.parser")
 rows = soup.select("td.courseTab_content tr")
 
 class Exem():
-	pass
-		
+  pass
+
 exems = []
 for row in rows:
 	column = row.select("td.courseTab_td")
@@ -73,8 +74,7 @@ for i in objects:
   x = i.date.split("-")
   event = {
     'summary': i.name,
-    'location': '800 Howard St., San Francisco, CA 94103',
-    'description': 'בינימין ובראל משטלתים על העולם',
+    'description': course_details,
     'start': {
       'date': f'{x[2]}-{x[1]}-{x[0]}',
       #'timeZone': 'America/Los_Angeles',
