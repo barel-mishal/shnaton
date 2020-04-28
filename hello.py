@@ -1,8 +1,37 @@
 import requests
 from bs4 import BeautifulSoup
 import io
-import re
-import quickstart # try to link the two file to work togther i will keep trying
+import datetime
+import pickle
+import os.path
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+
+# If modifying these scopes, delete the file token.pickle.
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+
+creds = None
+# The file token.pickle stores the user's access and refresh tokens, and is
+# created automatically when the authorization flow completes for the first
+# time.
+if os.path.exists('token.pickle'):
+    with open('token.pickle', 'rb') as token:
+        creds = pickle.load(token)
+# If there are no (valid) credentials available, let the user log in.
+if not creds or not creds.valid:
+    if creds and creds.expired and creds.refresh_token:
+        creds.refresh(Request())
+    else:
+        flow = InstalledAppFlow.from_client_secrets_file(
+            'credentials.json', SCOPES)
+        creds = flow.run_local_server(port=0)
+    # Save the credentials for the next run
+    with open('token.pickle', 'wb') as token:
+        pickle.dump(creds, token)
+
+service = build('calendar', 'v3', credentials=creds)
+
 
 link = requests.get("https://shnaton.huji.ac.il/index.php?peula=CourseD&course=71012&detail=examDates&year=2020&line=&faculty=8&maslul=0")
 text = link.text
@@ -40,6 +69,23 @@ for i in exems:
 		date1.append(i.date)
 		objects.append(i)
 
+for i in objects:
+  x = i.date.split("-")
+  event = {
+    'summary': i.name,
+    'location': '800 Howard St., San Francisco, CA 94103',
+    'description': 'בינימין ובראל משטלתים על העולם',
+    'start': {
+      'date': f'{x[2]}-{x[1]}-{x[0]}',
+      #'timeZone': 'America/Los_Angeles',
+    },
+    'end': {
+      'date': f'{x[2]}-{x[1]}-{x[0]}',
+      #'timeZone': 'America/Los_Angeles',
+    }
+  }
+
+  event = service.events().insert(calendarId='primary', body=event).execute()
 
 
 with io.open("out1.html", "w", encoding="utf-8") as f:
