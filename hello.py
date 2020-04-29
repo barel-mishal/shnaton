@@ -32,12 +32,12 @@ if not creds or not creds.valid:
 
 service = build('calendar', 'v3', credentials=creds)
 
-course_details = "71430"
-link = requests.get(f"https://shnaton.huji.ac.il/index.php?peula=CourseD&course={course_details}&detail=examDates&year=2020&line=&faculty=8&maslul=0")
-text = link.text
+course = "71034"
+link = requests.get(f"https://shnaton.huji.ac.il/index.php?peula=CourseD&course={course}&detail=examDates&year=2020&line=&faculty=8&maslul=0")
+html = link.text
 
 
-soup = BeautifulSoup(text, features="html.parser")
+soup = BeautifulSoup(html, features="html.parser")
 rows = soup.select("td.courseTab_content tr")
 
 class Exem():
@@ -54,34 +54,26 @@ for row in rows:
 	 	exem.simster = column[5].get_text()
 	 	exems.append(exem)
 
-# i try to make it print one time 
+unique_exems = []
+unique_detes = []
+for exem in exems:
+	if exem.date not in unique_detes:
+		unique_detes.append(exem.date)
+		unique_exems.append(exem)
 
-# for exem in exems:
-# 		print("name due: " + exem.name)
-# 		print("date of exem: " + exem.date)
-# 		print("time: " + exem.time)
-# 		print("simster: " + exem.date)
-# 		print("__________________________\n")
-
-objects = []
-date1 = []
-for i in exems:
-	if i.date not in date1:
-		date1.append(i.date)
-		objects.append(i)
-
-for i in objects:
-  x = i.date.split("-")
+for exem in unique_exems:
+  parsed_date = exem.date.split("-")
+  year = parsed_date[2]
+  day = parsed_date[1]
+  month = parsed_date[0]
   event = {
     'summary': i.name,
-    'description': course_details,
+    'description': course_details + "הצלחה מובטחת",
     'start': {
-      'date': f'{x[2]}-{x[1]}-{x[0]}',
-      #'timeZone': 'America/Los_Angeles',
+      'date': f'{year}-{month}-{day}',
     },
     'end': {
-      'date': f'{x[2]}-{x[1]}-{x[0]}',
-      #'timeZone': 'America/Los_Angeles',
+      'date': f'{year}-{month}-{day}',
     }
   }
 
