@@ -32,7 +32,7 @@ if not creds or not creds.valid:
 
 service = build('calendar', 'v3', credentials=creds)
 
-course = "71034"
+course = "65125"
 link = requests.get(f"https://shnaton.huji.ac.il/index.php?peula=CourseD&course={course}&detail=examDates&year=2020&line=&faculty=8&maslul=0")
 html = link.text
 
@@ -40,35 +40,34 @@ html = link.text
 soup = BeautifulSoup(html, features="html.parser")
 rows = soup.select("td.courseTab_content tr")
 
-class Exem():
-  pass
 
-exems = []
+
+
+class Exem():
+  def __hash__(self):
+    return self.date.__hash__()
+  def __eq__(self, other):
+    return self.date == other.date
+
+exems = set()
 for row in rows:
-	column = row.select("td.courseTab_td")
-	if column:
+  column = row.select("td.courseTab_td")
+  if column:
 	 	exem = Exem()
 	 	exem.name = column[4].get_text()
 	 	exem.date = column[0].get_text()
 	 	exem.time = column[1].get_text()
 	 	exem.simster = column[5].get_text()
-	 	exems.append(exem)
+	 	exems.add(exem)
 
-unique_exems = []
-unique_detes = []
 for exem in exems:
-	if exem.date not in unique_detes:
-		unique_detes.append(exem.date)
-		unique_exems.append(exem)
-
-for exem in unique_exems:
   parsed_date = exem.date.split("-")
   year = parsed_date[2]
   day = parsed_date[1]
   month = parsed_date[0]
   event = {
-    'summary': i.name,
-    'description': course_details + "הצלחה מובטחת",
+    'summary': exem.name,
+    'description': course + "הצלחה מובטחת",
     'start': {
       'date': f'{year}-{month}-{day}',
     },
@@ -76,12 +75,12 @@ for exem in unique_exems:
       'date': f'{year}-{month}-{day}',
     }
   }
-
+  
   event = service.events().insert(calendarId='primary', body=event).execute()
 
 
 with io.open("out1.html", "w", encoding="utf-8") as f:
-    f.write(text.replace("windows-1255", "utf-8"))
+    f.write(html.replace("windows-1255", "utf-8"))
 f.close()
 
 
