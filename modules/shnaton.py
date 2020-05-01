@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 from exem import Exem
+from google_calnder import GoogleCalender
 
-class Snaton():
+class Shnaton():
     def get_exems(self, course):
         link = requests.get(f"https://shnaton.huji.ac.il/index.php?peula=CourseD&course={course}&detail=examDates&year=2020&line=&faculty=8&maslul=0")
         html = link.text
@@ -22,3 +23,9 @@ class Snaton():
                 exem.simster = column[5].get_text()
                 exems.add(exem)
         return exems
+
+class IOShnaton():
+    def io_shnaton(self, html):
+        with io.open("out1.html", "w", encoding="utf-8") as f:
+            f.write(html.replace("windows-1255", "utf-8"))
+        f.close()
