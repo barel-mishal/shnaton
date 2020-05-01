@@ -63,8 +63,8 @@ for row in rows:
 for exem in exems:
   parsed_date = exem.date.split("-")
   year = parsed_date[2]
-  day = parsed_date[1]
-  month = parsed_date[0]
+  day = parsed_date[0]
+  month = parsed_date[1]
   event = {
     'summary': exem.name,
     'description': course + "הצלחה מובטחת",
