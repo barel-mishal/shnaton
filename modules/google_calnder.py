@@ -1,4 +1,3 @@
-import io
 import datetime
 import pickle
 import os.path
@@ -29,19 +28,17 @@ class GoogleCalender():
             # Save the credentials for the next run
             with open('token.pickle', 'wb') as token:
                 pickle.dump(creds, token)
+        self.service = build('calendar', 'v3', credentials=creds)
 
-            service = build('calendar', 'v3', credentials=creds)
-        return service
-
-class EventsCreator():
-    for exem in exems:
+    def create_exem(self, exem, course_num):
+        
         parsed_date = exem.date.split("-")
         year = parsed_date[2]
         day = parsed_date[0]
         month = parsed_date[1]
         event = {
             'summary': exem.name,
-            'description': course + "הצלחה מובטחת",
+            'description': course_num + "הצלחה מובטחת",
             'start': {
             'date': f'{year}-{month}-{day}',
             },
@@ -49,5 +46,5 @@ class EventsCreator():
             'date': f'{year}-{month}-{day}',
             }
         }
-    event = service.events().insert(calendarId='primary', body=event).execute()
-    return event
+        event = self.service.events().insert(calendarId='primary', body=event).execute()
+        pass
