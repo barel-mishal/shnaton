@@ -45,3 +45,7 @@ class GoogleCalender():
         }
         event = self.service.events().insert(calendarId='primary', body=event).execute()
         pass
+
+    def create_class():
+        pass
+

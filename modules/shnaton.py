@@ -5,6 +5,9 @@ from exem import Exem
 from google_calnder import GoogleCalender
 
 class Shnaton():
+    def get_name_course():
+        pass
+    
     def get_exems(self, course):
         link = requests.get(f"https://shnaton.huji.ac.il/index.php?peula=CourseD&course={course}&detail=examDates&year=2020&line=&faculty=8&maslul=0")
         html = link.text
@@ -24,4 +27,9 @@ class Shnaton():
                 exem.simster = column[5].get_text()
                 exems.add(exem)
         return exems
+    
+    def get_class_time():
+        pass
+
+    
 

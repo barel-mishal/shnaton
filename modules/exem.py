@@ -1,4 +1,5 @@
 
+# make a sat from objects teken from scriping
 class Exem():
   def __hash__(self):
     return self.date.__hash__()
