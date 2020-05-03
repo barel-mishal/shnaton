@@ -25,8 +25,3 @@ class Shnaton():
                 exems.add(exem)
         return exems
 
-# class IOShnaton():
-#     def io_shnaton(self, html):
-#         with io.open("out1.html", "w", encoding="utf-8") as f:
-#             f.write(html.replace("windows-1255", "utf-8"))
-#         f.close()

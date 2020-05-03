@@ -12,9 +12,7 @@ class GoogleCalender():
         SCOPES = ['https://www.googleapis.com/auth/calendar']
 
         creds = None
-        # The file token.pickle stores the user's access and refresh tokens, and is
-        # created automatically when the authorization flow completes for the first
-        # time.
+
         if os.path.exists('token.pickle'):
             with open('token.pickle', 'rb') as token:
                 creds = pickle.load(token)
@@ -31,7 +29,6 @@ class GoogleCalender():
         self.service = build('calendar', 'v3', credentials=creds)
 
     def create_exem(self, exem, course_num):
-        
         parsed_date = exem.date.split("-")
         year = parsed_date[2]
         day = parsed_date[0]
@@ -40,10 +37,10 @@ class GoogleCalender():
             'summary': exem.name,
             'description': course_num + "הצלחה מובטחת",
             'start': {
-            'date': f'{year}-{month}-{day}',
+                'date': f'{year}-{month}-{day}',
             },
             'end': {
-            'date': f'{year}-{month}-{day}',
+                'date': f'{year}-{month}-{day}',
             }
         }
         event = self.service.events().insert(calendarId='primary', body=event).execute()
