@@ -4,7 +4,6 @@ import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
- 
 
 class GoogleCalender():
     def __init__(self):
@@ -34,8 +33,8 @@ class GoogleCalender():
         day = parsed_date[0]
         month = parsed_date[1]
         event = {
-            'summary': exem.name,
-            'description': course_num + "הצלחה מובטחת",
+            'summary': f"{exem.name_course_heb} {exem.name}",
+            'description': f"{course_num}\n{exem.course_link}",
             'start': {
                 'date': f'{year}-{month}-{day}',
             },
