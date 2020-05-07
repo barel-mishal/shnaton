@@ -7,5 +7,9 @@ google_calnder = GoogleCalender()
 shnaton = Shnaton()
 exems = shnaton.get_exems(course)
 
-for exem in exems:
-    google_calnder.create_exem(exem, course)
+# for exem in exems:
+#     google_calnder.create_exem(exem, course)
+
+
+
+print(shnaton.get_course_hours(course))

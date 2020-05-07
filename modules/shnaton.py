@@ -7,13 +7,13 @@ from google_calnder import GoogleCalender
 class Shnaton():
     def get_course_hours(self, course):
         link = requests.get(f"https://shnaton.huji.ac.il/index.php?peula=Simple&starting=1&negishut=0&year=2020&course={course}&faculty=0&prisa=2&word=&option=1&coursetype=0&language=&shiur=")
-        html = link.text
-
-        soup = BeautifulSoup(html, features="html.parser")
-        name_course_eng = soup.select("td.courseTD b")[0].get_text()
-        name_course_heb = soup.select("td.courseTD b")[1].get_text()
+        main_page = link.text
         
-        return name_course_heb
+        soup = BeautifulSoup(main_page, features="html.parser")
+        
+        course_det = soup.select("tr td.courseDet")
+        print(course_det)
+        return "good"
 
     def get_exems(self, course):
         link = f"https://shnaton.huji.ac.il/index.php?peula=Simple&starting=1&negishut=0&year=2020&course={course}&faculty=0&prisa=2&word=&option=1&coursetype=0&language=&shiur="
