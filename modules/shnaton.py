@@ -37,7 +37,7 @@ class Shnaton():
                 exem = Exem()
                 exem.course_link = link
                 exem.course_name_eng = name_course_eng
-                exem.name_course_heb = name_course_heb
+                exem.course_name_heb = name_course_heb
                 exem.name = column[4].get_text()
                 exem.date = column[0].get_text()
                 exem.time = column[1].get_text()

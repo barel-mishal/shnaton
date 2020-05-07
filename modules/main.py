@@ -11,5 +11,4 @@ exems = shnaton.get_exems(course)
 #     google_calnder.create_exem(exem, course)
 
 
-
 print(shnaton.get_course_hours(course))
