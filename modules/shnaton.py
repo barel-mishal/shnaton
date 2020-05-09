@@ -11,7 +11,12 @@ class Shnaton():
         
         soup = BeautifulSoup(main_page, features="html.parser")
         
-        course_det = soup.select("tr td.courseDet")
+        rows = soup.select("tr")
+        course_det = []
+        for row in rows:
+            column = row.select('td.courseDet.text')
+            if column:
+                course_det.append(column)
         print(course_det)
         return "good"
 
